@@ -85,10 +85,10 @@ for (int i = 0; i < osxPlatforms.size(); i++) {
 
 try {
   parallel platforms
-} catch (err) {
+} finally {
   /* if (currentBuild.result == 'FAILURE') { */
     emailext(
-      subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - \$BUILD_STATUS [${currentBuild.result}]',
+      subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - \$BUILD_STATUS [${currentBuild.result}]",
       body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS
 
 Check console output at $BUILD_URL to view full results.
@@ -110,5 +110,4 @@ ${BUILD_LOG,maxLines=60}
       replyTo: '$DEFAULT_REPLYTO'
     )
   /* } */
-  throw err
 }
