@@ -88,19 +88,21 @@ try {
 } catch (err) {
   emailext(
     subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - FAILED",
-    body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - FAILED
+    body: """\$PROJECT_NAME - Build # \$BUILD_NUMBER - FAILED
 
-Check console output at $BUILD_URL to view full results.
+$err
 
-Building $BRANCH_NAME for $CAUSE
-$JOB_DESCRIPTION
+Check console output at \$BUILD_URL to view full results.
+
+Building \$BRANCH_NAME for \$CAUSE
+\$JOB_DESCRIPTION
 
 Chages:
-$CHANGES
+\$CHANGES
 
 End of build log:
-${BUILD_LOG,maxLines=60}
-''',
+\${BUILD_LOG,maxLines=60}
+    """,
     to: 'dsimon@flatironinstitute.org',
     /*
     recipientProviders: [
