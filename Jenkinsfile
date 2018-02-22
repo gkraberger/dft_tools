@@ -70,7 +70,7 @@ for (int i = 0; i < osxPlatforms.size(); i++) {
           sh "cmake $srcDir -DTRIQS_ROOT=$installDir"
           sh "make -j2"
           try {
-            sh "make test && false"
+            sh "make test"
           } catch (exc) {
             archiveArtifacts(artifacts: 'Testing/Temporary/LastTest.log')
             throw exc
