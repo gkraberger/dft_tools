@@ -85,7 +85,7 @@ for (int i = 0; i < osxPlatforms.size(); i++) {
 
 try {
   parallel platforms
-} finally {
+} catch (err) {
   /* if (currentBuild.result == 'FAILURE') { */
     emailext(
       subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - \$BUILD_STATUS [${currentBuild.result}]',
@@ -103,10 +103,12 @@ End of build log:
 ${BUILD_LOG,maxLines=60}
 ''',
       to: 'dsimon@flatironinstitute.org',
+      /*
       recipientProviders: [
         [$class: 'DevelopersRecipientProvider'],
-      ],
+      ], */
       replyTo: '$DEFAULT_REPLYTO'
     )
   /* } */
+  throw err
 }
