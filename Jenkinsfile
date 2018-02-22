@@ -70,7 +70,7 @@ for (int i = 0; i < osxPlatforms.size(); i++) {
           sh "cmake $srcDir -DTRIQS_ROOT=$installDir"
           sh "make -j2"
           try {
-            sh "make test"
+            sh "make test && false"
           } catch (exc) {
             archiveArtifacts(artifacts: 'Testing/Temporary/LastTest.log')
             throw exc
@@ -86,9 +86,9 @@ for (int i = 0; i < osxPlatforms.size(); i++) {
 try {
   parallel platforms
 } finally {
-  if (currentBuild.result == 'FAILURE') {
+  /* if (currentBuild.result == 'FAILURE') { */
     emailext(
-      subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS',
+      subject: "\$PROJECT_NAME - Build # \$BUILD_NUMBER - \$BUILD_STATUS [${currentBuild.result}]',
       body: '''$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS
 
 Check console output at $BUILD_URL to view full results.
@@ -102,11 +102,11 @@ $CHANGES
 End of build log:
 ${BUILD_LOG,maxLines=60}
 ''',
-      to: 'mzingl@flatironinstitute.org, hstrand@flatironinstitute.org, nils.wentzell@gmail.com, dsimon@flatironinstitute.org',
+      to: 'dsimon@flatironinstitute.org',
       recipientProviders: [
         [$class: 'DevelopersRecipientProvider'],
       ],
       replyTo: '$DEFAULT_REPLYTO'
     )
-  }
+  /* } */
 }
